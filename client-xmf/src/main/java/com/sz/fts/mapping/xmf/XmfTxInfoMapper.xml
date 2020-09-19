@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.xmf.XmfTxInfoMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.xmf.XmfTxInfo">
+        <id column="TX_INFO_ID" property="txInfoId" jdbcType="INTEGER"/>
+        <result column="ORDER_ID" property="orderId" jdbcType="INTEGER"/>
+        <result column="OPEN_ID" property="openId" jdbcType="VARCHAR"/>
+        <result column="LLB_OPEN_ID" property="llbOpenId" jdbcType="VARCHAR"/>
+        <result column="PAYMENT_TIME" property="paymentTime" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="PAYMENT_NO" property="paymentNo" jdbcType="VARCHAR"/>
+        <result column="TX_MONEY" property="txMoney" jdbcType="VARCHAR"/>
+        <result column="TX_MONTH" property="txMonth" jdbcType="VARCHAR"/>
+        <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR"/>
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+        <result column="QUDAO" property="qudao" jdbcType="INTEGER"/>
+        <result column="EXTEND1" property="extend1" jdbcType="VARCHAR"/>
+        <result column="EXTEND2" property="extend2" jdbcType="VARCHAR"/>
+        <result column="EXTEND3" property="extend3" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    TX_INFO_ID, ORDER_ID, OPEN_ID, LLB_OPEN_ID, PAYMENT_TIME, CREATE_TIME, PAYMENT_NO, 
+    TX_MONEY, TX_MONTH, NICK_NAME, MOBILE, QUDAO, EXTEND1, EXTEND2, EXTEND3
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tx_info
+        where TX_INFO_ID = #{txInfoId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.xmf.XmfTxInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tx_info
+        where 1=1
+        <if test="openId!=null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="llbOpenId!=null">
+            and LLB_OPEN_ID =#{llbOpenId,jdbcType=VARCHAR}
+        </if>
+        <if test="txMonth!=null">
+            and TX_MONTH =#{txMonth,jdbcType=VARCHAR}
+        </if>
+        <if test="extend1!=null">
+            and EXTEND1 =#{extend1,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2!=null">
+            and EXTEND2 =#{extend2,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+        order by TX_INFO_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.xmf.XmfTxInfo">
+        select
+        count(1)
+        from xmf_tx_info
+        where 1=1
+        <if test="openId!=null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="llbOpenId!=null">
+            and LLB_OPEN_ID =#{llbOpenId,jdbcType=VARCHAR}
+        </if>
+        <if test="txMonth!=null">
+            and TX_MONTH =#{txMonth,jdbcType=VARCHAR}
+        </if>
+        <if test="extend1!=null">
+            and EXTEND1 =#{extend1,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2!=null">
+            and EXTEND2 =#{extend2,jdbcType=VARCHAR}
+        </if>
+
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+    </select>
+
+    <select id="selectTxInfoByOpenId" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.xmf.XmfTxInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tx_info
+        where OPEN_ID = #{openId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xmf_tx_info
+    where TX_INFO_ID = #{txInfoId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.xmf.XmfTxInfo">
+    insert into xmf_tx_info (TX_INFO_ID, ORDER_ID, OPEN_ID, 
+      LLB_OPEN_ID, PAYMENT_TIME, CREATE_TIME, 
+      PAYMENT_NO, TX_MONEY, TX_MONTH, 
+      NICK_NAME, MOBILE, QUDAO, 
+      EXTEND1, EXTEND2, EXTEND3
+      )
+    values (#{txInfoId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
+      #{llbOpenId,jdbcType=VARCHAR}, #{paymentTime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{paymentNo,jdbcType=VARCHAR}, #{txMoney,jdbcType=VARCHAR}, #{txMonth,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{qudao,jdbcType=INTEGER}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.xmf.XmfTxInfo">
+        insert into xmf_tx_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="txInfoId != null">
+                TX_INFO_ID,
+            </if>
+            <if test="orderId != null">
+                ORDER_ID,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="llbOpenId != null">
+                LLB_OPEN_ID,
+            </if>
+            <if test="paymentTime != null">
+                PAYMENT_TIME,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="paymentNo != null">
+                PAYMENT_NO,
+            </if>
+            <if test="txMoney != null">
+                TX_MONEY,
+            </if>
+            <if test="txMonth != null">
+                TX_MONTH,
+            </if>
+            <if test="nickName != null">
+                NICK_NAME,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="qudao != null">
+                QUDAO,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="txInfoId != null">
+                #{txInfoId,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="llbOpenId != null">
+                #{llbOpenId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentTime != null">
+                #{paymentTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentNo != null">
+                #{paymentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="txMoney != null">
+                #{txMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="txMonth != null">
+                #{txMonth,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="qudao != null">
+                #{qudao,jdbcType=INTEGER},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.xmf.XmfTxInfo">
+        update xmf_tx_info
+        <set>
+            <if test="orderId != null">
+                ORDER_ID = #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="llbOpenId != null">
+                LLB_OPEN_ID = #{llbOpenId,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentTime != null">
+                PAYMENT_TIME = #{paymentTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="paymentNo != null">
+                PAYMENT_NO = #{paymentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="txMoney != null">
+                TX_MONEY = #{txMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="txMonth != null">
+                TX_MONTH = #{txMonth,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                NICK_NAME = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="qudao != null">
+                QUDAO = #{qudao,jdbcType=INTEGER},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where TX_INFO_ID = #{txInfoId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.xmf.XmfTxInfo">
+    update xmf_tx_info
+    set ORDER_ID = #{orderId,jdbcType=INTEGER},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      LLB_OPEN_ID = #{llbOpenId,jdbcType=VARCHAR},
+      PAYMENT_TIME = #{paymentTime,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      PAYMENT_NO = #{paymentNo,jdbcType=VARCHAR},
+      TX_MONEY = #{txMoney,jdbcType=VARCHAR},
+      TX_MONTH = #{txMonth,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      QUDAO = #{qudao,jdbcType=INTEGER},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR}
+    where TX_INFO_ID = #{txInfoId,jdbcType=INTEGER}
+  </update>
+</mapper>

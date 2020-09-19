@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.yuyue.YuyuePhoneMapper" >
+  <resultMap id="BaseResultMap" type="com.sz.fts.bean.yuyue.YuyuePhone" >
+    <id column="PHONE_ID" property="phoneId" jdbcType="INTEGER" />
+    <result column="PHONE_NUMBER" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="EXTEND1" property="extend1" jdbcType="VARCHAR" />
+    <result column="EXTEND2" property="extend2" jdbcType="VARCHAR" />
+    <result column="EXTEND3" property="extend3" jdbcType="VARCHAR" />
+    <result column="EXTEND4" property="extend4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PHONE_ID, PHONE_NUMBER, STATUS, CREATE_TIME, EXTEND1, EXTEND2, EXTEND3, EXTEND4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from yuyue_phone
+    where PHONE_ID = #{phoneId,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryPhone" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from yuyue_phone
+    where status =0
+    order by PHONE_ID DESC limit #{start},6
+  </select>
+
+  <select id="queryBirthdayPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from yuyue_phone
+    where status =0
+    and PHONE_NUMBER like #{key} limit 0,18
+  </select>
+
+  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from yuyue_phone
+    where PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectListInfo" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.yuyue.YuyuePhone">
+    select
+    <include refid="Base_Column_List" />
+    from yuyue_phone
+    where 1=1
+    <if test="phoneNumber!=null">
+        and PHONE_NUMBER like #{phoneNumber}
+    </if>
+    <if test="status!=null">
+        and STATUS =#{status,javaType=INTEGER}
+    </if>
+    order by PHONE_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from yuyue_phone
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.yuyue.YuyuePhone" >
+    select
+    count(1)
+    from yuyue_phone
+    where 1=1
+    <if test="phoneNumber!=null">
+      and PHONE_NUMBER  like #{phoneNumber}
+    </if>
+    <if test="status!=null">
+      and STATUS =#{status,javaType=INTEGER}
+    </if>
+  </select>
+
+
+  <select id="getMobileNumber" parameterType="map" resultMap="BaseResultMap">
+    select
+    PHONE_NUMBER ,STATUS
+    from yuyue_phone
+    where 1=1
+    <if test="status!=null">
+      and STATUS =#{status,javaType=INTEGER}
+    </if>
+    <if test="keyword != null and keyword !=''">
+      and PHONE_NUMBER like concat('%', #{keyword}, '%')
+    </if>
+    order by PHONE_ID limit #{pageBegin, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yuyue_phone
+    where PHONE_ID = #{phoneId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.sz.fts.bean.yuyue.YuyuePhone" >
+    insert into yuyue_phone (PHONE_ID, PHONE_NUMBER, STATUS,
+    CREATE_TIME, EXTEND1, EXTEND2,
+    EXTEND3, EXTEND4)
+    values (#{phoneId,jdbcType=INTEGER}, #{phoneNumber,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+    #{createTime,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR},
+    #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertList" useGeneratedKeys="true" parameterType="java.util.List">
+    <selectKey resultType="long" keyProperty="id" order="AFTER">
+      SELECT
+      LAST_INSERT_ID()
+    </selectKey>
+    insert into yuyue_phone (PHONE_NUMBER, STATUS, CREATE_TIME)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.phoneNumber,jdbcType=VARCHAR}, #{item.status,jdbcType=INTEGER},#{item.createTime,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.sz.fts.bean.yuyue.YuyuePhone" >
+    insert into yuyue_phone
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="phoneId != null" >
+        PHONE_ID,
+      </if>
+      <if test="phoneNumber != null" >
+        PHONE_NUMBER,
+      </if>
+
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1,
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2,
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3,
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="phoneId != null" >
+        #{phoneId,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.yuyue.YuyuePhone" >
+    update yuyue_phone
+    <set >
+      <if test="phoneNumber != null" >
+        PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PHONE_ID = #{phoneId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.yuyue.YuyuePhone" >
+    update yuyue_phone
+    set PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR}
+    where PHONE_ID = #{phoneId,jdbcType=INTEGER}
+  </update>
+</mapper>

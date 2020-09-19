@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.fts.dao.zjf.MobileNumberMapper">
+
+    <update id="update" parameterType="com.sz.fts.bean.zjf.MobileNumber">
+        update c_mobile_phone
+        set update_time = now()
+        <if test="selectFlag != null">
+            ,select_flag = #{selectFlag, jdbcType=INTEGER}
+            <choose>
+                <when test="selectFlag == 0">
+                    ,select_time = null
+                </when>
+                <otherwise>
+                    ,select_time = now()
+                </otherwise>
+            </choose>
+        </if>
+        <if test="status != null">
+            ,status = #{status, jdbcType=INTEGER}
+            <choose>
+                <when test="status == 0">
+                    ,sell_time = null
+                </when>
+                <otherwise>
+                    ,sell_time = now()
+                </otherwise>
+            </choose>
+        </if>
+        where id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <select id="getMobileNumber" parameterType="map" resultType="com.sz.fts.bean.zjf.MobileNumber">
+        select extra_price extraPrice, price, id, mobile_number mobileNumber, status, select_flag selectFlag, type, activity_key activityKey,
+        create_time createTime, select_time selectTime, sell_time sellTime, extend1, update_time updateTime
+        from c_mobile_phone where 1 = 1
+        <if test="type != null">
+            and type = #{type, jdbcType=INTEGER}
+        </if>
+        <if test="keyword != null and keyword !=''">
+            and mobile_number like concat('%', #{keyword}, '%')
+        </if>
+        order by status, select_flag, cast(create_time as char), cast(select_time as char)
+        limit #{pageBegin, jdbcType=INTEGER}, #{pageSize, jdbcType=INTEGER}
+    </select>
+
+    <select id="get" parameterType="integer" resultType="com.sz.fts.bean.zjf.MobileNumber">
+        select extra_price extraPrice, price, id,mobile_number mobileNumber, status, select_flag selectFlag, type, activity_key activityKey,
+        create_time createTime, select_time selectTime, sell_time sellTime, extend1, update_time updateTime
+        from c_mobile_phone
+        where id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="getByMobileNumber" parameterType="string" resultType="com.sz.fts.bean.zjf.MobileNumber">
+        select extra_price extraPrice, price, id,mobile_number mobileNumber, status, select_flag selectFlag, type, activity_key activityKey,
+        create_time createTime, select_time selectTime, sell_time sellTime, extend1, update_time updateTime
+        from c_mobile_phone
+        where activity_key = #{activityKey}
+        and mobile_number = #{mobileNumber}
+    </select>
+
+    <select id="selectByMobileNumber" parameterType="com.sz.fts.bean.zjf.MobileNumber" resultType="com.sz.fts.bean.zjf.MobileNumber">
+        select extra_price extraPrice, price, id,mobile_number mobileNumber, status, select_flag selectFlag, type, activity_key activityKey,
+        create_time createTime, select_time selectTime, sell_time sellTime, extend1, update_time updateTime
+        from c_mobile_phone
+        where activity_key = #{activityKey}
+        <if test="status != null" >
+            and status = #{status, jdbcType=INTEGER}
+        </if>
+        <if test="selectFlag != null" >
+            and select_flag = #{selectFlag, jdbcType=INTEGER}
+        </if>
+    </select>
+
+
+
+</mapper>

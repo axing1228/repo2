@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.fts.dao.xmftg.XmfTgInfoMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.xmftg.XmfTgInfo">
+        <id column="TG_ID" jdbcType="INTEGER" property="tgId"/>
+        <result column="OPEN_ID" jdbcType="VARCHAR" property="openId"/>
+        <result column="STATUS" jdbcType="INTEGER" property="status"/>
+        <result column="COUNT" jdbcType="INTEGER" property="count"/>
+        <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime"/>
+        <result column="FLAG" jdbcType="VARCHAR" property="flag"/>
+        <result column="JIESU_TIME" jdbcType="VARCHAR" property="jiesuTime"/>
+        <result column="EXTEND1" jdbcType="VARCHAR" property="extend1"/>
+        <result column="EXTEND2" jdbcType="VARCHAR" property="extend2"/>
+        <result column="EXTEND3" jdbcType="VARCHAR" property="extend3"/>
+        <result column="EXTEND4" jdbcType="VARCHAR" property="extend4"/>
+        <result column="EXTEND5" jdbcType="VARCHAR" property="extend5"/>
+        <result column="EXTEND6" jdbcType="VARCHAR" property="extend6"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    TG_ID, OPEN_ID, STATUS, COUNT, CREATE_TIME, FLAG, JIESU_TIME, EXTEND1, EXTEND2, EXTEND3, 
+    EXTEND4, EXTEND5, EXTEND6
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tg_info
+        where TG_ID = #{tgId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectTgInfoByFlag" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tg_info
+        where FLAG = #{flag,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectTgInfoByOpenIdAndStatus"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tg_info
+        where OPEN_ID = #{openId,jdbcType=VARCHAR} AND STATUS = #{status,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectList" parameterType="com.sz.fts.bean.xmftg.XmfTgInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tg_info
+        where 1=1
+        <if test="openId !=null">
+            AND OPEN_ID =#{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            AND STATUS = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="flag != null">
+            AND FLAG = #{flag,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xmf_tg_info
+    where TG_ID = #{tgId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.xmftg.XmfTgInfo">
+    insert into xmf_tg_info (TG_ID, OPEN_ID, STATUS, 
+      COUNT, CREATE_TIME, FLAG, 
+      JIESU_TIME, EXTEND1, EXTEND2, 
+      EXTEND3, EXTEND4, EXTEND5, 
+      EXTEND6)
+    values (#{tgId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{count,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, 
+      #{jiesuTime,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, 
+      #{extend6,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.xmftg.XmfTgInfo">
+        insert into xmf_tg_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tgId != null">
+                TG_ID,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="count != null">
+                COUNT,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="flag != null">
+                FLAG,
+            </if>
+            <if test="jiesuTime != null">
+                JIESU_TIME,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+            <if test="extend4 != null">
+                EXTEND4,
+            </if>
+            <if test="extend5 != null">
+                EXTEND5,
+            </if>
+            <if test="extend6 != null">
+                EXTEND6,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tgId != null">
+                #{tgId,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="count != null">
+                #{count,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="jiesuTime != null">
+                #{jiesuTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                #{extend4,jdbcType=VARCHAR},
+            </if>
+            <if test="extend5 != null">
+                #{extend5,jdbcType=VARCHAR},
+            </if>
+            <if test="extend6 != null">
+                #{extend6,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.xmftg.XmfTgInfo">
+        update xmf_tg_info
+        <set>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="count != null">
+                COUNT = #{count,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                FLAG = #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="jiesuTime != null">
+                JIESU_TIME = #{jiesuTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                EXTEND4 = #{extend4,jdbcType=VARCHAR},
+            </if>
+            <if test="extend5 != null">
+                EXTEND5 = #{extend5,jdbcType=VARCHAR},
+            </if>
+            <if test="extend6 != null">
+                EXTEND6 = #{extend6,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where TG_ID = #{tgId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.xmftg.XmfTgInfo">
+        update xmf_tg_info
+        set OPEN_ID = #{openId,jdbcType=VARCHAR},
+        STATUS = #{status,jdbcType=INTEGER},
+        COUNT = #{count,jdbcType=INTEGER},
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+        FLAG = #{flag,jdbcType=VARCHAR},
+        JIESU_TIME = #{jiesuTime,jdbcType=VARCHAR},
+        EXTEND1 = #{extend1,jdbcType=VARCHAR},
+        EXTEND2 = #{extend2,jdbcType=VARCHAR},
+        EXTEND3 = #{extend3,jdbcType=VARCHAR},
+        EXTEND4 = #{extend4,jdbcType=VARCHAR},
+        EXTEND5 = #{extend5,jdbcType=VARCHAR},
+        EXTEND6 = #{extend6,jdbcType=VARCHAR}
+        where TG_ID = #{tgId,jdbcType=INTEGER}
+    </update>
+</mapper>

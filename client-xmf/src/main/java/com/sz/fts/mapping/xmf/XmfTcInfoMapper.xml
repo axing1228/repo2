@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.xmf.XmfTcInfoMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.xmf.XmfTcInfo">
+        <id column="TAOCAN_ID" property="taocanId" jdbcType="INTEGER"/>
+        <result column="TAOCAN_NAME" property="taocanName" jdbcType="VARCHAR"/>
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="PRICE" property="price" jdbcType="VARCHAR"/>
+        <result column="Yj_MONEY" property="yjMoney" jdbcType="VARCHAR"/>
+        <result column="TC_URL" property="tcUrl" jdbcType="VARCHAR"/>
+        <result column="SOURCE" property="source" jdbcType="VARCHAR"/>
+        <result column="AREA" property="area" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="EXTEND1" property="extend1" jdbcType="VARCHAR"/>
+        <result column="EXTEND2" property="extend2" jdbcType="VARCHAR"/>
+        <result column="EXTEND3" property="extend3" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    TAOCAN_ID, TAOCAN_NAME, DESCRIPTION, PRICE, Yj_MONEY, TC_URL, SOURCE, AREA, CREATE_TIME, 
+    EXTEND1, EXTEND2, EXTEND3
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tc_info
+        where TAOCAN_ID = #{taocanId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.xmf.XmfTcInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tc_info
+        where 1=1
+        <if test="source != null">
+            and SOURCE = #{source,jdbcType=VARCHAR}
+        </if>
+        <if test="taocanName != null">
+            and TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR}
+        </if>
+        <if test="area != null">
+            and AREA = #{area,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2 != null">
+            and EXTEND2 = #{extend2,jdbcType=VARCHAR}
+        </if>
+        <if test="extend3 != null">
+            and EXTEND3 = #{extend3,jdbcType=VARCHAR}
+        </if>
+        order by TAOCAN_ID limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.xmf.XmfTcInfo">
+        select
+        count(1)
+        from xmf_tc_info
+        where 1=1
+        <if test="source != null">
+            and SOURCE = #{source,jdbcType=VARCHAR}
+        </if>
+        <if test="taocanName != null">
+            and TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR}
+        </if>
+        <if test="area != null">
+            and AREA = #{area,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2 != null">
+            and EXTEND2 = #{extend2,jdbcType=VARCHAR}
+        </if>
+        <if test="extend3 != null">
+            and EXTEND3 = #{extend3,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xmf_tc_info
+    where TAOCAN_ID = #{taocanId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.xmf.XmfTcInfo">
+    insert into xmf_tc_info (TAOCAN_ID, TAOCAN_NAME, DESCRIPTION, 
+      PRICE, Yj_MONEY, TC_URL, 
+      SOURCE, AREA, CREATE_TIME, 
+      EXTEND1, EXTEND2, EXTEND3
+      )
+    values (#{taocanId,jdbcType=INTEGER}, #{taocanName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{price,jdbcType=VARCHAR}, #{yjMoney,jdbcType=VARCHAR}, #{tcUrl,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.xmf.XmfTcInfo">
+        insert into xmf_tc_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taocanId != null">
+                TAOCAN_ID,
+            </if>
+            <if test="taocanName != null">
+                TAOCAN_NAME,
+            </if>
+            <if test="description != null">
+                DESCRIPTION,
+            </if>
+            <if test="price != null">
+                PRICE,
+            </if>
+            <if test="yjMoney != null">
+                Yj_MONEY,
+            </if>
+            <if test="tcUrl != null">
+                TC_URL,
+            </if>
+            <if test="source != null">
+                SOURCE,
+            </if>
+            <if test="area != null">
+                AREA,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taocanId != null">
+                #{taocanId,jdbcType=INTEGER},
+            </if>
+            <if test="taocanName != null">
+                #{taocanName,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=VARCHAR},
+            </if>
+            <if test="yjMoney != null">
+                #{yjMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="tcUrl != null">
+                #{tcUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.xmf.XmfTcInfo">
+        update xmf_tc_info
+        <set>
+            <if test="taocanName != null">
+                TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                DESCRIPTION = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                PRICE = #{price,jdbcType=VARCHAR},
+            </if>
+            <if test="yjMoney != null">
+                Yj_MONEY = #{yjMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="tcUrl != null">
+                TC_URL = #{tcUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                SOURCE = #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                AREA = #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where TAOCAN_ID = #{taocanId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.xmf.XmfTcInfo">
+    update xmf_tc_info
+    set TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=VARCHAR},
+      Yj_MONEY = #{yjMoney,jdbcType=VARCHAR},
+      TC_URL = #{tcUrl,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      AREA = #{area,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR}
+    where TAOCAN_ID = #{taocanId,jdbcType=INTEGER}
+  </update>
+</mapper>

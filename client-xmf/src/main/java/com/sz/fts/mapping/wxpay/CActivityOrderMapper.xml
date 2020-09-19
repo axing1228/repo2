@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.wxpay.CActivityOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.sz.fts.bean.wxpay.CActivityOrder" >
+    <id column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="activity_key" property="activityKey" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="CHAR" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="complete_pay_flag" property="completePayFlag" jdbcType="CHAR" />
+    <result column="complete_pay_time" property="completePayTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_number, user_id, activity_key, order_status, extend1, extend2, extend3, create_time, 
+    update_time, complete_pay_flag, complete_pay_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from c_activity_order
+    where order_number = #{orderNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from c_activity_order
+    where order_number = #{orderNumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sz.fts.bean.wxpay.CActivityOrder" >
+    insert into c_activity_order (order_number, user_id, activity_key, 
+      order_status, extend1, extend2, 
+      extend3, create_time, update_time, 
+      complete_pay_flag, complete_pay_time)
+    values (#{orderNumber,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{activityKey,jdbcType=VARCHAR}, 
+      #{orderStatus,jdbcType=CHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{completePayFlag,jdbcType=CHAR}, #{completePayTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sz.fts.bean.wxpay.CActivityOrder" >
+    insert into c_activity_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNumber != null" >
+        order_number,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="activityKey != null" >
+        activity_key,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="completePayFlag != null" >
+        complete_pay_flag,
+      </if>
+      <if test="completePayTime != null" >
+        complete_pay_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityKey != null" >
+        #{activityKey,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="completePayFlag != null" >
+        #{completePayFlag,jdbcType=CHAR},
+      </if>
+      <if test="completePayTime != null" >
+        #{completePayTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.wxpay.CActivityOrder" >
+    update c_activity_order
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityKey != null" >
+        activity_key = #{activityKey,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="completePayFlag != null" >
+        complete_pay_flag = #{completePayFlag,jdbcType=CHAR},
+      </if>
+      <if test="completePayTime != null" >
+        complete_pay_time = #{completePayTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_number = #{orderNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.wxpay.CActivityOrder" >
+    update c_activity_order
+    set user_id = #{userId,jdbcType=VARCHAR},
+      activity_key = #{activityKey,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=CHAR},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      complete_pay_flag = #{completePayFlag,jdbcType=CHAR},
+      complete_pay_time = #{completePayTime,jdbcType=VARCHAR}
+    where order_number = #{orderNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

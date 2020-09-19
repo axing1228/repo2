@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.hhact.AActLogMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.hhact.AActLog">
+        <id column="LOG_ID" property="logId" jdbcType="INTEGER"/>
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+        <result column="ACT_NAME" property="actName" jdbcType="VARCHAR"/>
+        <result column="OPEN_ID" property="openId" jdbcType="VARCHAR"/>
+        <result column="TJ_PHONE" property="tjPhone" jdbcType="VARCHAR"/>
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+        <result column="ACT_TYPE" property="actType" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="EXTEND1" property="extend1" jdbcType="VARCHAR"/>
+        <result column="EXTEND2" property="extend2" jdbcType="INTEGER"/>
+        <result column="EXTEND3" property="extend3" jdbcType="VARCHAR"/>
+        <result column="EXTEND4" property="extend4" jdbcType="VARCHAR"/>
+        <result column="EXTEND5" property="extend5" jdbcType="VARCHAR"/>
+        <result column="EXTEND6" property="extend6" jdbcType="VARCHAR"/>
+        <result column="EXTEND7" property="extend7" jdbcType="VARCHAR"/>
+        <result column="EXTEND8" property="extend8" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    LOG_ID, MOBILE, ACT_NAME, OPEN_ID, TJ_PHONE, USER_NAME, ACT_TYPE, CREATE_TIME, EXTEND1, 
+    EXTEND2, EXTEND3, EXTEND4,EXTEND5,EXTEND6,EXTEND7,EXTEND8
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from a_act_log
+        where LOG_ID = #{logId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByOrderSeq" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from a_act_log
+        where EXTEND4 =#{orderSeq}
+    </select>
+
+    <select id="selectLike" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from a_act_log
+        where ACT_TYPE = '12' and ACT_NAME like '5%'
+    </select>
+
+    <select id="downloadByLogId" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.hhact.AActLog">
+        select
+        <include refid="Base_Column_List"/>
+        from a_act_log
+        where ACT_TYPE = #{actType} and LOG_ID &gt; #{logId}
+    </select>
+
+    <select id="selectByKuandai" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select
+        count(1)
+        from a_act_log
+        where ACT_TYPE = '12' and ACT_NAME = #{actName}
+    </select>
+
+    <select id="selectByKuandaiAndActType" resultType="java.lang.Integer">
+        select
+        count(1)
+        from a_act_log
+        where ACT_TYPE = #{actType} and ACT_NAME = #{actName}
+    </select>
+
+
+    <select id="selectByWifi" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.hhact.AActLog">
+        select
+        LOG_ID, MOBILE, ACT_NAME, OPEN_ID, TJ_PHONE, USER_NAME, ACT_TYPE, CREATE_TIME, EXTEND1,
+        EXTEND2, EXTEND3, EXTEND4,EXTEND5
+        from a_act_log
+        where 1=1
+        <if test="mobile != null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="actType != null">
+            and ACT_TYPE = #{actType,jdbcType=VARCHAR}
+        </if>
+        <if test="openId != null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="extend1 != null">
+            and EXTEND1 = #{extend1,jdbcType=VARCHAR}
+        </if>
+        <if test="extend4 != null">
+            and EXTEND4 = #{extend4,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2 != null">
+            and EXTEND2 = #{extend2}
+        </if>
+        ORDER BY LOG_ID DESC
+    </select>
+
+
+    <select id="selectListByMobileAndType" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.hhact.AActLog">
+        select
+        <include refid="Base_Column_List"/>
+        from a_act_log
+        where 1=1
+        <if test="mobile != null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="actType != null">
+            and ACT_TYPE = #{actType,jdbcType=VARCHAR}
+        </if>
+        <if test="openId != null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="extend1 != null">
+            and EXTEND1 = #{extend1,jdbcType=VARCHAR}
+        </if>
+        <if test="extend4 != null">
+            and EXTEND4 = #{extend4,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2 != null">
+            and EXTEND2 = #{extend2}
+        </if>
+        ORDER BY LOG_ID DESC
+    </select>
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.hhact.AActLog">
+        select
+        <include refid="Base_Column_List"/>
+        from a_act_log
+        where 1=1
+        <if test="mobile != null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="actType != null">
+            and ACT_TYPE = #{actType,jdbcType=VARCHAR}
+        </if>
+        <if test="openId != null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="extend1 != null">
+            and EXTEND1 = #{extend1,jdbcType=VARCHAR}
+        </if>
+        <if test="tjPhone != null">
+            and TJ_PHONE = #{tjPhone,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2 != null">
+            and EXTEND2 = #{extend2}
+        </if>
+        <if test="extend4 != null">
+            and EXTEND4 = #{extend4,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+        order by LOG_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="selectFlagIsNUll" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.hhact.AActLog">
+        select
+        <include refid="Base_Column_List"/>
+        from a_act_log
+        where 1=1
+
+        <if test="actType != null">
+            and ACT_TYPE = #{actType,jdbcType=VARCHAR}
+        </if>
+        AND EXTEND6 is NULL
+        order by LOG_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.hhact.AActLog">
+        select
+        count(1)
+        from a_act_log
+        where 1=1
+        <if test="mobile != null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="actType != null">
+            and ACT_TYPE = #{actType,jdbcType=VARCHAR}
+        </if>
+        <if test="openId != null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="extend1 != null">
+            and EXTEND1 = #{extend1,jdbcType=VARCHAR}
+        </if>
+        <if test="tjPhone != null">
+            and TJ_PHONE = #{tjPhone,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2 != null">
+            and EXTEND2 = #{extend2}
+        </if>
+        <if test="extend4 != null">
+            and EXTEND4 = #{extend4,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+    </select>
+
+    <select id="selectTop" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from a_act_log
+        where ACT_TYPE = 4
+        AND EXTEND4 !="未中奖" ORDER BY LOG_ID DESC limit 0,20
+    </select>
+
+    <select id="selectDistinctCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.hhact.AActLog">
+        select
+        count(DISTINCT (mobile))
+        from a_act_log
+        where 1=1
+        <if test="actType != null">
+            and ACT_TYPE = #{actType,jdbcType=VARCHAR}
+        </if>
+        <if test="extend2 != null">
+            and EXTEND2 &lt;= #{extend2,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="selectByPrizeNameAndExtend1" resultType="java.lang.Integer">
+        select
+        count(1)
+        from a_act_log
+        where EXTEND3 =#{prize} AND EXTEND1 =#{month}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from a_act_log
+    where LOG_ID = #{logId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.hhact.AActLog">
+    insert into a_act_log (LOG_ID, MOBILE, ACT_NAME, 
+      OPEN_ID, TJ_PHONE, USER_NAME, 
+      ACT_TYPE, CREATE_TIME, EXTEND1, 
+      EXTEND2, EXTEND3, EXTEND4,EXTEND5,EXTEND6,EXTEND7,EXTEND8
+      )
+    values (#{logId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{actName,jdbcType=VARCHAR}, 
+      #{openId,jdbcType=VARCHAR}, #{tjPhone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{actType,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=INTEGER}, #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR}, #{extend7,jdbcType=VARCHAR}, #{extend8,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.hhact.AActLog">
+        insert into a_act_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="actName != null">
+                ACT_NAME,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="tjPhone != null">
+                TJ_PHONE,
+            </if>
+            <if test="userName != null">
+                USER_NAME,
+            </if>
+            <if test="actType != null">
+                ACT_TYPE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+            <if test="extend4 != null">
+                EXTEND4,
+            </if>
+            <if test="extend5 != null">
+                EXTEND5,
+            </if>
+            <if test="extend6 != null">
+                EXTEND6,
+            </if>
+            <if test="extend7 != null">
+                EXTEND7,
+            </if>
+            <if test="extend8 != null">
+                EXTEND8,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                #{logId,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="actName != null">
+                #{actName,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="tjPhone != null">
+                #{tjPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="actType != null">
+                #{actType,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=INTEGER},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                #{extend4,jdbcType=VARCHAR},
+            </if>
+            <if test="extend5 != null">
+                #{extend5,jdbcType=VARCHAR},
+            </if>
+            <if test="extend6 != null">
+                #{extend6,jdbcType=VARCHAR},
+            </if>
+            <if test="extend7 != null">
+                #{extend7,jdbcType=VARCHAR},
+            </if>
+            <if test="extend8 != null">
+                #{extend8,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.hhact.AActLog">
+        update a_act_log
+        <set>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="actName != null">
+                ACT_NAME = #{actName,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="tjPhone != null">
+                TJ_PHONE = #{tjPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="actType != null">
+                ACT_TYPE = #{actType,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=INTEGER},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                EXTEND4 = #{extend4,jdbcType=VARCHAR},
+            </if>
+            <if test="extend5 != null">
+                EXTEND5 = #{extend5,jdbcType=VARCHAR},
+            </if>
+            <if test="extend6 != null">
+                EXTEND6 = #{extend6,jdbcType=VARCHAR},
+            </if>
+            <if test="extend7 != null">
+                EXTEND7 = #{extend7,jdbcType=VARCHAR},
+            </if>
+            <if test="extend8 != null">
+                EXTEND8 = #{extend8,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where LOG_ID = #{logId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.hhact.AActLog">
+    update a_act_log
+    set MOBILE = #{mobile,jdbcType=VARCHAR},
+      ACT_NAME = #{actName,jdbcType=VARCHAR},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      TJ_PHONE = #{tjPhone,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      ACT_TYPE = #{actType,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=INTEGER},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      EXTEND5 = #{extend5,jdbcType=VARCHAR},
+      EXTEND6 = #{extend6,jdbcType=VARCHAR},
+      EXTEND7 = #{extend7,jdbcType=VARCHAR},
+      EXTEND8 = #{extend8,jdbcType=VARCHAR}
+    where LOG_ID = #{logId,jdbcType=INTEGER}
+  </update>
+</mapper>

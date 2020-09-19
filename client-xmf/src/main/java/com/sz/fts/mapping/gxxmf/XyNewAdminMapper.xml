@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.gxxmf.XyNewAdminMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.gxxmf.XyNewAdmin">
+        <id column="ADMIN_ID" property="adminId" jdbcType="INTEGER"/>
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+        <result column="OPEN_ID" property="openId" jdbcType="VARCHAR"/>
+        <result column="TYPE" property="type" jdbcType="INTEGER"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="EXTEND1" property="extend1" jdbcType="VARCHAR"/>
+        <result column="EXTEND2" property="extend2" jdbcType="VARCHAR"/>
+        <result column="EXTEND3" property="extend3" jdbcType="VARCHAR"/>
+        <result column="EXTEND4" property="extend4" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ADMIN_ID, MOBILE, OPEN_ID, TYPE, CREATE_TIME, EXTEND1, EXTEND2, EXTEND3, EXTEND4
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from xy_new_admin
+        where ADMIN_ID = #{adminId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAdminByMobileAndType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xy_new_admin
+        where MOBILE = #{mobile,jdbcType=VARCHAR} AND TYPE =#{type,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAdminByOpenIdAndType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xy_new_admin
+        where OPEN_ID = #{openid,jdbcType=VARCHAR} AND TYPE =#{type,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xy_new_admin
+    where ADMIN_ID = #{adminId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.gxxmf.XyNewAdmin">
+    insert into xy_new_admin (ADMIN_ID, MOBILE, OPEN_ID, 
+      TYPE, CREATE_TIME, EXTEND1, 
+      EXTEND2, EXTEND3, EXTEND4
+      )
+    values (#{adminId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.gxxmf.XyNewAdmin">
+        insert into xy_new_admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                ADMIN_ID,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+            <if test="extend4 != null">
+                EXTEND4,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                #{extend4,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.gxxmf.XyNewAdmin">
+        update xy_new_admin
+        <set>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                EXTEND4 = #{extend4,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ADMIN_ID = #{adminId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.gxxmf.XyNewAdmin">
+    update xy_new_admin
+    set MOBILE = #{mobile,jdbcType=VARCHAR},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR}
+    where ADMIN_ID = #{adminId,jdbcType=INTEGER}
+  </update>
+</mapper>

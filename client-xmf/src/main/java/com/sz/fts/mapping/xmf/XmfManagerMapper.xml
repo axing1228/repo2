@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.xmf.XmfManagerMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.xmf.XmfManager">
+        <id column="MANAGER_ID" property="managerId" jdbcType="INTEGER"/>
+        <result column="OPEN_ID" property="openId" jdbcType="VARCHAR"/>
+        <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR"/>
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+        <result column="TX_MONEY" property="txMoney" jdbcType="VARCHAR"/>
+        <result column="JIESUAN_MONEY" property="jiesuanMoney" jdbcType="VARCHAR"/>
+        <result column="QUDAO" property="qudao" jdbcType="INTEGER"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="EXTEND1" property="extend1" jdbcType="VARCHAR"/>
+        <result column="EXTEND2" property="extend2" jdbcType="VARCHAR"/>
+        <result column="EXTEND3" property="extend3" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    MANAGER_ID, OPEN_ID, NICK_NAME, MOBILE, TX_MONEY, JIESUAN_MONEY, QUDAO, CREATE_TIME, 
+    EXTEND1, EXTEND2, EXTEND3
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_manager
+        where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectManagerByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_manager
+        where OPEN_ID = #{openId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.xmf.XmfManager">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_manager
+        where 1=1
+        <if test="mobile!=null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="openId!=null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+        order by MANAGER_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        select
+        count(1)
+        from xmf_manager
+        where 1=1
+        <if test="mobile!=null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="openId!=null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xmf_manager
+    where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.xmf.XmfManager">
+    insert into xmf_manager (MANAGER_ID, OPEN_ID, NICK_NAME, 
+      MOBILE, TX_MONEY, JIESUAN_MONEY, 
+      QUDAO, CREATE_TIME, EXTEND1, 
+      EXTEND2, EXTEND3)
+    values (#{managerId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{txMoney,jdbcType=VARCHAR}, #{jiesuanMoney,jdbcType=VARCHAR}, 
+      #{qudao,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.xmf.XmfManager">
+        insert into xmf_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="managerId != null">
+                MANAGER_ID,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="nickName != null">
+                NICK_NAME,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="txMoney != null">
+                TX_MONEY,
+            </if>
+            <if test="jiesuanMoney != null">
+                JIESUAN_MONEY,
+            </if>
+            <if test="qudao != null">
+                QUDAO,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="managerId != null">
+                #{managerId,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="txMoney != null">
+                #{txMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="jiesuanMoney != null">
+                #{jiesuanMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="qudao != null">
+                #{qudao,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.xmf.XmfManager">
+        update xmf_manager
+        <set>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                NICK_NAME = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="txMoney != null">
+                TX_MONEY = #{txMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="jiesuanMoney != null">
+                JIESUAN_MONEY = #{jiesuanMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="qudao != null">
+                QUDAO = #{qudao,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.xmf.XmfManager">
+    update xmf_manager
+    set OPEN_ID = #{openId,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      TX_MONEY = #{txMoney,jdbcType=VARCHAR},
+      JIESUAN_MONEY = #{jiesuanMoney,jdbcType=VARCHAR},
+      QUDAO = #{qudao,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR}
+    where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+  </update>
+</mapper>

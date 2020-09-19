@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!-- 数据库驱动包位置 -->
+	<classPathEntry location="E:\worktools\maven-repository\mysql\mysql-connector-java-5.1.38-bin.jar" />
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+	
+		  <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>  
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>  
+        <!-- Pagination -->  
+ <!--         <plugin type="com.wechat.platform.utils.bean.PaginationPlugin"></plugin> -->
+	
+		 <!-- 取消注释 -->  
+        <commentGenerator>  
+            <property name="suppressDate" value="true" />  
+            <property name="suppressAllComments" value="true" />  
+        </commentGenerator> 
+		<!-- 数据库链接URL、用户名、密码 -->
+		 <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3307/szfts" userId="root" password="123456">
+		<!--<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://202.102.101.149:22101/wechat?useUnicode=true&amp;characterEncoding=utf8" userId="jshxwxh" password="JSHX!@#!wxh!jshx">-->
+		</jdbcConnection>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!-- 生成模型的包名和位置 -->
+		<javaModelGenerator targetPackage="com.sz.fts.bean.click" targetProject="szfts\src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!-- 生成的映射文件包名和位置 -->
+		<sqlMapGenerator targetPackage="com.sz.fts.mapping.click" targetProject="szfts\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- 生成DAO的包名和位置 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.sz.fts.dao.click" targetProject="szfts\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+		<!--<table tableName="own_give" domainObjectName="OwnGive" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+		<!--<table tableName="own_record" domainObjectName="OwnRecord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+		<!--<table tableName="own_sms" domainObjectName="OwnSMS" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+		<table tableName="own_test_sms" domainObjectName="OwnTestSMS" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+	</context>
+</generatorConfiguration>

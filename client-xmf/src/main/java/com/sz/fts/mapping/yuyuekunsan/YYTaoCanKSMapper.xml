@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.yuyuekunsan.YYTaoCanKSMapper" >
+  <resultMap id="BaseResultMap" type="com.sz.fts.bean.yuyuekunsan.YYTaoCanKS" >
+    <id column="TAOCAN_ID" property="taocanId" jdbcType="INTEGER" />
+    <result column="TAOCAN_NAME" property="taocanName" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="VARCHAR" />
+    <result column="EXTEND1" property="extend1" jdbcType="VARCHAR" />
+    <result column="EXTEND2" property="extend2" jdbcType="VARCHAR" />
+    <result column="EXTEND3" property="extend3" jdbcType="VARCHAR" />
+    <result column="EXTEND4" property="extend4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TAOCAN_ID, TAOCAN_NAME, DESCRIPTION, STATUS, CREATE_TIME, PRICE, EXTEND1, EXTEND2, 
+    EXTEND3, EXTEND4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from yy_taocan_ks
+    where TAOCAN_ID = #{taocanId,jdbcType=INTEGER}
+  </select>
+
+
+
+  <select id="selectList" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.yuyuekunsan.YYTaoCanKS" >
+    select
+    <include refid="Base_Column_List" />
+    from yy_taocan_ks
+    where 1=1
+    <if test="taocanName != null" >
+      and TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR}
+    </if>
+    <if test="extend1!=null">
+      and EXTEND1 = #{extend1,jdbcType=VARCHAR}
+    </if>
+    order by TAOCAN_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.yuyuekunsan.YYTaoCanKS" >
+    select
+    count(1)
+    from yy_taocan_ks
+    where 1=1
+    <if test="taocanName != null" >
+      and TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR}
+    </if>
+    <if test="extend1!=null">
+      and EXTEND1 = #{extend1,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yy_taocan_ks
+    where TAOCAN_ID = #{taocanId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sz.fts.bean.yuyuekunsan.YYTaoCanKS" >
+    insert into yy_taocan_ks (TAOCAN_ID, TAOCAN_NAME, DESCRIPTION, 
+      STATUS, CREATE_TIME, PRICE, 
+      EXTEND1, EXTEND2, EXTEND3, 
+      EXTEND4)
+    values (#{taocanId,jdbcType=INTEGER}, #{taocanName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
+      #{extend4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sz.fts.bean.yuyuekunsan.YYTaoCanKS" >
+    insert into yy_taocan_ks
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="taocanId != null" >
+        TAOCAN_ID,
+      </if>
+      <if test="taocanName != null" >
+        TAOCAN_NAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1,
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2,
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3,
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="taocanId != null" >
+        #{taocanId,jdbcType=INTEGER},
+      </if>
+      <if test="taocanName != null" >
+        #{taocanName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.yuyuekunsan.YYTaoCanKS" >
+    update yy_taocan_ks
+    <set >
+      <if test="taocanName != null" >
+        TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TAOCAN_ID = #{taocanId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.yuyuekunsan.YYTaoCanKS" >
+    update yy_taocan_ks
+    set TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR}
+    where TAOCAN_ID = #{taocanId,jdbcType=INTEGER}
+  </update>
+</mapper>

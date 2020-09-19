@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.yuyuekunsan.YYOrderKSMapperTwo">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.yuyuekunsan.YYOrderKS">
+        <id column="ORDER_ID" property="orderId" jdbcType="INTEGER"/>
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+        <result column="PERSON_ID" property="personId" jdbcType="VARCHAR"/>
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+        <result column="ADDRESS" property="address" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="SOURCE" property="source" jdbcType="INTEGER"/>
+        <result column="PERSON_ADDRESS" property="personAddress" jdbcType="VARCHAR"/>
+        <result column="YY_NO" property="yyNo" jdbcType="VARCHAR"/>
+        <result column="TAOCAN_NAME" property="taocanName" jdbcType="VARCHAR"/>
+        <result column="MSG" property="msg" jdbcType="VARCHAR"/>
+        <result column="STATUS" property="status" jdbcType="INTEGER"/>
+        <result column="PHONE_NUMBER" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="EXTEND1" property="extend1" jdbcType="VARCHAR"/>
+        <result column="EXTEND2" property="extend2" jdbcType="VARCHAR"/>
+        <result column="EXTEND3" property="extend3" jdbcType="VARCHAR"/>
+        <result column="EXTEND4" property="extend4" jdbcType="VARCHAR"/>
+        <result column="EXTEND5" property="extend5" jdbcType="VARCHAR"/>
+        <result column="EXTEND6" property="extend6" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ORDER_ID, USER_NAME, PERSON_ID, MOBILE, ADDRESS, CREATE_TIME, SOURCE, PERSON_ADDRESS, 
+    YY_NO, TAOCAN_NAME, MSG, STATUS, PHONE_NUMBER, EXTEND1, EXTEND2, EXTEND3, EXTEND4,EXTEND5,EXTEND6
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from yy_order_ks
+        where ORDER_ID = #{orderId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByStatus">
+    delete from yy_order_ks
+    where status in ('2','3')
+  </delete>
+
+    <delete id="deleteByTime" parameterType="java.lang.String">
+    delete from yy_order_ks
+    where STR_TO_DATE (
+    CREATE_TIME,
+    '%Y-%m-%d %T'
+    ) BETWEEN STR_TO_DATE (
+    '2016-01-01 00:00:00',
+    '%Y-%m-%d %T'
+    )
+    AND STR_TO_DATE (
+    #{createTime,jdbcType=VARCHAR},
+    '%Y-%m-%d %T'
+    )
+  </delete>
+
+    <select id="selectByStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from yy_order_ks
+        where status in ('2','3')
+    </select>
+
+    <select id="selectByTime" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from yy_order_ks
+        where status not in ('2','3') and STR_TO_DATE (
+        CREATE_TIME,
+        '%Y-%m-%d %T'
+        ) BETWEEN STR_TO_DATE (
+        '2016-01-01 00:00:00',
+        '%Y-%m-%d %T'
+        )
+        AND STR_TO_DATE (
+        #{createTime,jdbcType=VARCHAR},
+        '%Y-%m-%d %T'
+        )
+    </select>
+
+    <select id="selectByJuBen" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from yy_order_ks
+        where EXTEND2 = #{extend2,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.yuyuekunsan.YYOrderKS">
+        select
+        <include refid="Base_Column_List"/>
+        from yy_order_ks
+        where 1=1
+        <if test="personId!=null">
+            and PERSON_ID = #{personId,jdbcType=VARCHAR}
+        </if>
+        <if test="mobile!=null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="source != null">
+            and SOURCE = #{source,jdbcType=INTEGER}
+        </if>
+        <if test="status!=null">
+            and STATUS =#{status,jdbcType=INTEGER}
+        </if>
+        <if test="extend1!=null">
+            and EXTEND1 =#{extend1,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+        order by ORDER_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.yuyuekunsan.YYOrderKS">
+        select
+        count(1)
+        from yy_order_ks
+        where 1 =1
+        <if test="personId!=null">
+            and PERSON_ID = #{personId,jdbcType=VARCHAR}
+        </if>
+        <if test="mobile!=null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="source != null">
+            and SOURCE = #{source,jdbcType=INTEGER}
+        </if>
+        <if test="status!=null">
+            and STATUS =#{status,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from yy_order_ks
+    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.yuyuekunsan.YYOrderKS">
+    insert into yy_order_ks (ORDER_ID, USER_NAME, PERSON_ID, 
+      MOBILE, ADDRESS, CREATE_TIME, 
+      SOURCE, PERSON_ADDRESS, YY_NO, 
+      TAOCAN_NAME, MSG, STATUS, 
+      PHONE_NUMBER, EXTEND1, EXTEND2, 
+      EXTEND3, EXTEND4)
+    values (#{orderId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{personId,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{source,jdbcType=INTEGER}, #{personAddress,jdbcType=VARCHAR}, #{yyNo,jdbcType=VARCHAR}, 
+      #{taocanName,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.yuyuekunsan.YYOrderKS">
+        insert into yy_order_ks
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                ORDER_ID,
+            </if>
+            <if test="userName != null">
+                USER_NAME,
+            </if>
+            <if test="personId != null">
+                PERSON_ID,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="address != null">
+                ADDRESS,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="source != null">
+                SOURCE,
+            </if>
+            <if test="personAddress != null">
+                PERSON_ADDRESS,
+            </if>
+            <if test="yyNo != null">
+                YY_NO,
+            </if>
+            <if test="taocanName != null">
+                TAOCAN_NAME,
+            </if>
+            <if test="msg != null">
+                MSG,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="phoneNumber != null">
+                PHONE_NUMBER,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+            <if test="extend4 != null">
+                EXTEND4,
+            </if>
+            <if test="extend5 != null">
+                EXTEND5,
+            </if>
+            <if test="extend6 != null">
+                EXTEND6,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="personId != null">
+                #{personId,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=INTEGER},
+            </if>
+            <if test="personAddress != null">
+                #{personAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="yyNo != null">
+                #{yyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="taocanName != null">
+                #{taocanName,jdbcType=VARCHAR},
+            </if>
+            <if test="msg != null">
+                #{msg,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="phoneNumber != null">
+                #{phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                #{extend4,jdbcType=VARCHAR},
+            </if>
+            <if test="extend5 != null">
+                #{extend5,jdbcType=VARCHAR},
+            </if>
+            <if test="extend6 != null">
+                #{extend6,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.yuyuekunsan.YYOrderKS">
+        update yy_order_ks
+        <set>
+            <if test="userName != null">
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="personId != null">
+                PERSON_ID = #{personId,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                ADDRESS = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                SOURCE = #{source,jdbcType=INTEGER},
+            </if>
+            <if test="personAddress != null">
+                PERSON_ADDRESS = #{personAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="yyNo != null">
+                YY_NO = #{yyNo,jdbcType=VARCHAR},
+            </if>
+            <if test="taocanName != null">
+                TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR},
+            </if>
+            <if test="msg != null">
+                MSG = #{msg,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="phoneNumber != null">
+                PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                EXTEND4 = #{extend4,jdbcType=VARCHAR},
+            </if>
+            <if test="extend5 != null">
+                EXTEND5 = #{extend5,jdbcType=VARCHAR},
+            </if>
+            <if test="extend6 != null">
+                EXTEND6 = #{extend6,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ORDER_ID = #{orderId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.yuyuekunsan.YYOrderKS">
+    update yy_order_ks
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      PERSON_ID = #{personId,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=INTEGER},
+      PERSON_ADDRESS = #{personAddress,jdbcType=VARCHAR},
+      YY_NO = #{yyNo,jdbcType=VARCHAR},
+      TAOCAN_NAME = #{taocanName,jdbcType=VARCHAR},
+      MSG = #{msg,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR},
+       EXTEND5 = #{extend5,jdbcType=VARCHAR},
+        EXTEND6 = #{extend6,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

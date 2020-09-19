@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.own.OwnSMSMapper" >
+  <resultMap id="BaseResultMap" type="com.sz.fts.bean.own.OwnSMS" >
+    <id column="SMS_NO" property="smsNo" jdbcType="INTEGER" />
+    <result column="SMS_TELEPHONE" property="smsTelephone" jdbcType="VARCHAR" />
+    <result column="SMS_CODE" property="smsCode" jdbcType="VARCHAR" />
+    <result column="SMS_CREATE" property="smsCreate" jdbcType="VARCHAR" />
+    <result column="EXTEND1" property="extend1" jdbcType="VARCHAR" />
+    <result column="EXTEND2" property="extend2" jdbcType="VARCHAR" />
+    <result column="EXTEND3" property="extend3" jdbcType="VARCHAR" />
+    <result column="EXTEND4" property="extend4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    SMS_NO, SMS_TELEPHONE, SMS_CODE, SMS_CREATE, EXTEND1, EXTEND2, EXTEND3, EXTEND4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from own_sms
+    where SMS_NO = #{smsNo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from own_sms
+    where SMS_NO = #{smsNo,jdbcType=INTEGER}
+  </delete>
+  
+  
+  
+  
+    <select id="findSMSByTelephone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from own_sms
+    where SMS_TELEPHONE =  #{smsTelephone,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="deleteSMSByTelephone" parameterType="java.lang.String" >
+    delete from own_sms
+    where SMS_TELEPHONE =  #{smsTelephone,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  
+  
+   <insert id="insertSMSInfo" parameterType="com.sz.fts.bean.own.OwnSMS" >
+    insert into own_sms
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smsNo != null" >
+        SMS_NO,
+      </if>
+      <if test="smsTelephone != null" >
+        SMS_TELEPHONE,
+      </if>
+      <if test="smsCode != null" >
+        SMS_CODE,
+      </if>
+      <if test="smsCreate != null" >
+        SMS_CREATE,
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1,
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2,
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3,
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smsNo != null" >
+        #{smsNo,jdbcType=INTEGER},
+      </if>
+      <if test="smsTelephone != null" >
+        #{smsTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCode != null" >
+        #{smsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCreate != null" >
+        #{smsCreate,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateSMSByTelephone" parameterType="com.sz.fts.bean.own.OwnSMS" >
+    update own_sms
+    <set >
+      <if test="smsCode != null" >
+        SMS_CODE = #{smsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCreate != null" >
+        SMS_CREATE = #{smsCreate,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where  SMS_TELEPHONE = #{smsTelephone,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <insert id="insert" parameterType="com.sz.fts.bean.own.OwnSMS" >
+    insert into own_sms (SMS_NO, SMS_TELEPHONE, SMS_CODE, 
+      SMS_CREATE, EXTEND1, EXTEND2, 
+      EXTEND3, EXTEND4)
+    values (#{smsNo,jdbcType=INTEGER}, #{smsTelephone,jdbcType=VARCHAR}, #{smsCode,jdbcType=VARCHAR}, 
+      #{smsCreate,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sz.fts.bean.own.OwnSMS" >
+    insert into own_sms
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smsNo != null" >
+        SMS_NO,
+      </if>
+      <if test="smsTelephone != null" >
+        SMS_TELEPHONE,
+      </if>
+      <if test="smsCode != null" >
+        SMS_CODE,
+      </if>
+      <if test="smsCreate != null" >
+        SMS_CREATE,
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1,
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2,
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3,
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smsNo != null" >
+        #{smsNo,jdbcType=INTEGER},
+      </if>
+      <if test="smsTelephone != null" >
+        #{smsTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCode != null" >
+        #{smsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCreate != null" >
+        #{smsCreate,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.own.OwnSMS" >
+    update own_sms
+    <set >
+      <if test="smsTelephone != null" >
+        SMS_TELEPHONE = #{smsTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCode != null" >
+        SMS_CODE = #{smsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCreate != null" >
+        SMS_CREATE = #{smsCreate,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SMS_NO = #{smsNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.own.OwnSMS" >
+    update own_sms
+    set SMS_TELEPHONE = #{smsTelephone,jdbcType=VARCHAR},
+      SMS_CODE = #{smsCode,jdbcType=VARCHAR},
+      SMS_CREATE = #{smsCreate,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR}
+    where SMS_NO = #{smsNo,jdbcType=INTEGER}
+  </update>
+</mapper>

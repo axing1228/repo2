@@ -1,0 +1,65 @@
+package com.sz.fts.utils.sms;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+/*
+ * com.sz.fts.utils.sms.MD5 算法
+*/
+public class MD5 {
+    
+    // 全局数组
+    private final static String[] strDigits = { "0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+
+    /**
+     * 返回形式为数字跟字符串
+     * @param bByte
+     * @return
+     */
+    private static String byteToArrayString(byte bByte) {
+        int iRet = bByte;
+        if (iRet < 0) {
+            iRet += 256;
+        }
+        int iD1 = iRet / 16;
+        int iD2 = iRet % 16;
+        return strDigits[iD1] + strDigits[iD2];
+    }
+
+    /**
+     * 转换字节数组为16进制字串
+     * @param bByte
+     * @return
+     */
+    private static String byteToString(byte[] bByte) {
+        StringBuffer sBuffer = new StringBuffer();
+        for (int i = 0; i < bByte.length; i++) {
+            sBuffer.append(byteToArrayString(bByte[i]));
+        }
+        return sBuffer.toString();
+    }
+
+    /**
+     * MD5加密
+     * @param strObj
+     * @return String
+     */
+    public static String GetMD5Code(String strObj) {
+        String resultString = null;
+        try {
+            resultString = new String(strObj);
+            MessageDigest md = MessageDigest.getInstance("md5");
+            // md.digest() 该函数返回值为存放哈希值结果的byte数组
+            resultString = byteToString(md.digest(strObj.getBytes()));
+        } catch (NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+        }
+        return resultString;
+    }
+
+    //698d51a19d8a121ce581499d7b701668
+    public static void main(String[] args) {
+
+        System.out.println(MD5.GetMD5Code("10000003qAz4#6RfV1=3yHn81433433600000"));
+    }
+}

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.engineer.ZsEngineerManagerMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.engineer.ZsEngineerManager">
+        <id column="MANAGER_ID" property="managerId" jdbcType="INTEGER"/>
+        <result column="OPEN_ID" property="openId" jdbcType="VARCHAR"/>
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR"/>
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+        <result column="TX_INFO" property="txInfo" jdbcType="VARCHAR"/>
+        <result column="TX_MONEY" property="txMoney" jdbcType="INTEGER"/>
+        <result column="STAR_LEVEL" property="starLevel" jdbcType="VARCHAR"/>
+        <result column="JIESUAN_MONEY" property="jiesuanMoney" jdbcType="INTEGER"/>
+        <result column="QUDAO" property="qudao" jdbcType="INTEGER"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="EXTEND1" property="extend1" jdbcType="VARCHAR"/>
+        <result column="EXTEND2" property="extend2" jdbcType="VARCHAR"/>
+        <result column="EXTEND3" property="extend3" jdbcType="VARCHAR"/>
+        <result column="EXTEND4" property="extend4" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    MANAGER_ID, OPEN_ID, USER_NAME, MOBILE, TX_INFO, TX_MONEY, STAR_LEVEL, JIESUAN_MONEY, 
+    QUDAO, CREATE_TIME, EXTEND1, EXTEND2, EXTEND3, EXTEND4
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from zs_engineer_manager
+        where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectManagerByMobileAndSource" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from zs_engineer_manager
+        where MOBILE = #{mobile} AND QUDAO =#{source}
+    </select>
+
+    <select id="selectManagerByOpenIdAndSource" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from zs_engineer_manager
+        where OPEN_ID = #{openid} AND QUDAO =#{source}
+    </select>
+
+    <select id="selectManagerBySource" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from zs_engineer_manager
+        where QUDAO =#{source}
+    </select>
+
+    <select id="selectManagerByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from zs_engineer_manager
+        where OPEN_ID = #{openid}
+    </select>
+
+    <select id="selectManagerByMobile" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from zs_engineer_manager
+        where MOBILE = #{mobile}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.engineer.ZsEngineerManager">
+        select
+        <include refid="Base_Column_List"/>
+        from zs_engineer_manager
+        where 1=1
+        <if test="userName!=null">
+            and USER_NAME = #{userName,jdbcType=VARCHAR}
+        </if>
+        <if test="openId!=null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="mobile!=null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="qudao!=null">
+            and QUDAO = #{qudao,jdbcType=INTEGER}
+        </if>
+        <if test="extend4!=null">
+            and EXTEND4 = #{extend4,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+        order by MANAGER_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.engineer.ZsEngineerManager">
+        select
+        count(1)
+        from zs_engineer_manager
+        where 1=1
+        <if test="userName!=null">
+            and USER_NAME = #{userName,jdbcType=VARCHAR}
+        </if>
+        <if test="openId!=null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="mobile!=null">
+            and MOBILE = #{mobile,jdbcType=VARCHAR}
+        </if>
+        <if test="qudao!=null">
+            and QUDAO = #{qudao,jdbcType=INTEGER}
+        </if>
+        <if test="extend4!=null">
+            and EXTEND4 = #{extend4,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from zs_engineer_manager
+    where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.engineer.ZsEngineerManager">
+    insert into zs_engineer_manager (MANAGER_ID, OPEN_ID, USER_NAME, 
+      MOBILE, TX_INFO, TX_MONEY, 
+      STAR_LEVEL, JIESUAN_MONEY, QUDAO, 
+      CREATE_TIME, EXTEND1, EXTEND2, 
+      EXTEND3, EXTEND4)
+    values (#{managerId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{txInfo,jdbcType=VARCHAR}, #{txMoney,jdbcType=INTEGER}, 
+      #{starLevel,jdbcType=VARCHAR}, #{jiesuanMoney,jdbcType=INTEGER}, #{qudao,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.engineer.ZsEngineerManager">
+        insert into zs_engineer_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="managerId != null">
+                MANAGER_ID,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="userName != null">
+                USER_NAME,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="txInfo != null">
+                TX_INFO,
+            </if>
+            <if test="txMoney != null">
+                TX_MONEY,
+            </if>
+            <if test="starLevel != null">
+                STAR_LEVEL,
+            </if>
+            <if test="jiesuanMoney != null">
+                JIESUAN_MONEY,
+            </if>
+            <if test="qudao != null">
+                QUDAO,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+            <if test="extend4 != null">
+                EXTEND4,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="managerId != null">
+                #{managerId,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="txInfo != null">
+                #{txInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="txMoney != null">
+                #{txMoney,jdbcType=INTEGER},
+            </if>
+            <if test="starLevel != null">
+                #{starLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="jiesuanMoney != null">
+                #{jiesuanMoney,jdbcType=INTEGER},
+            </if>
+            <if test="qudao != null">
+                #{qudao,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                #{extend4,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.engineer.ZsEngineerManager">
+        update zs_engineer_manager
+        <set>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                USER_NAME = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="txInfo != null">
+                TX_INFO = #{txInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="txMoney != null">
+                TX_MONEY = #{txMoney,jdbcType=INTEGER},
+            </if>
+            <if test="starLevel != null">
+                STAR_LEVEL = #{starLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="jiesuanMoney != null">
+                JIESUAN_MONEY = #{jiesuanMoney,jdbcType=INTEGER},
+            </if>
+            <if test="qudao != null">
+                QUDAO = #{qudao,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                EXTEND4 = #{extend4,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.engineer.ZsEngineerManager">
+    update zs_engineer_manager
+    set OPEN_ID = #{openId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      TX_INFO = #{txInfo,jdbcType=VARCHAR},
+      TX_MONEY = #{txMoney,jdbcType=INTEGER},
+      STAR_LEVEL = #{starLevel,jdbcType=VARCHAR},
+      JIESUAN_MONEY = #{jiesuanMoney,jdbcType=INTEGER},
+      QUDAO = #{qudao,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR}
+    where MANAGER_ID = #{managerId,jdbcType=INTEGER}
+  </update>
+</mapper>

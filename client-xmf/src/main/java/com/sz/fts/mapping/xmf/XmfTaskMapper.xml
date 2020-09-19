@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.xmf.XmfTaskMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.xmf.XmfTask">
+        <id column="TASK_ID" property="taskId" jdbcType="INTEGER"/>
+        <result column="OPEN_ID" property="openId" jdbcType="VARCHAR"/>
+        <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR"/>
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR"/>
+        <result column="SHARE_NUM" property="shareNum" jdbcType="INTEGER"/>
+        <result column="SHARE_PYQ" property="sharePyq" jdbcType="INTEGER"/>
+        <result column="SHARE_ORDER" property="shareOrder" jdbcType="INTEGER"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="EXTEND1" property="extend1" jdbcType="VARCHAR"/>
+        <result column="EXTEND2" property="extend2" jdbcType="VARCHAR"/>
+        <result column="EXTEND3" property="extend3" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    TASK_ID, OPEN_ID, NICK_NAME, MOBILE, SHARE_NUM, SHARE_PYQ, SHARE_ORDER, CREATE_TIME, 
+    EXTEND1, EXTEND2, EXTEND3
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_task
+        where TASK_ID = #{taskId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectTaskByOpenIdAndToday" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_task
+        where OPEN_ID = #{openId,jdbcType=VARCHAR} AND CREATE_TIME = #{today,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xmf_task
+    where TASK_ID = #{taskId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.xmf.XmfTask">
+    insert into xmf_task (TASK_ID, OPEN_ID, NICK_NAME, 
+      MOBILE, SHARE_NUM, SHARE_PYQ, 
+      SHARE_ORDER, CREATE_TIME, EXTEND1, 
+      EXTEND2, EXTEND3)
+    values (#{taskId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{shareNum,jdbcType=INTEGER}, #{sharePyq,jdbcType=INTEGER}, 
+      #{shareOrder,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.xmf.XmfTask">
+        insert into xmf_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+                TASK_ID,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="nickName != null">
+                NICK_NAME,
+            </if>
+            <if test="mobile != null">
+                MOBILE,
+            </if>
+            <if test="shareNum != null">
+                SHARE_NUM,
+            </if>
+            <if test="sharePyq != null">
+                SHARE_PYQ,
+            </if>
+            <if test="shareOrder != null">
+                SHARE_ORDER,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskId != null">
+                #{taskId,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="shareNum != null">
+                #{shareNum,jdbcType=INTEGER},
+            </if>
+            <if test="sharePyq != null">
+                #{sharePyq,jdbcType=INTEGER},
+            </if>
+            <if test="shareOrder != null">
+                #{shareOrder,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.xmf.XmfTask">
+        update xmf_task
+        <set>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                NICK_NAME = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                MOBILE = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="shareNum != null">
+                SHARE_NUM = #{shareNum,jdbcType=INTEGER},
+            </if>
+            <if test="sharePyq != null">
+                SHARE_PYQ = #{sharePyq,jdbcType=INTEGER},
+            </if>
+            <if test="shareOrder != null">
+                SHARE_ORDER = #{shareOrder,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where TASK_ID = #{taskId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.xmf.XmfTask">
+    update xmf_task
+    set OPEN_ID = #{openId,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      SHARE_NUM = #{shareNum,jdbcType=INTEGER},
+      SHARE_PYQ = #{sharePyq,jdbcType=INTEGER},
+      SHARE_ORDER = #{shareOrder,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR}
+    where TASK_ID = #{taskId,jdbcType=INTEGER}
+  </update>
+</mapper>

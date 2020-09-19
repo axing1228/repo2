@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.fts.dao.wxpay.WxCallbackOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.sz.fts.bean.wxpay.WxCallbackOrder" >
+    <id column="ORDER_ID" property="orderId" jdbcType="INTEGER" />
+    <result column="TRANSACTION_ID" property="transactionId" jdbcType="VARCHAR" />
+    <result column="ORDER_SEQ" property="orderSeq" jdbcType="VARCHAR" />
+    <result column="UPTRAN_SEQ" property="uptranSeq" jdbcType="VARCHAR" />
+    <result column="FEE" property="fee" jdbcType="VARCHAR" />
+    <result column="SP_ID" property="spId" jdbcType="VARCHAR" />
+    <result column="CMP_DATE" property="cmpDate" jdbcType="VARCHAR" />
+    <result column="TIME_STAMP" property="timeStamp" jdbcType="VARCHAR" />
+    <result column="PAY_TIME" property="payTime" jdbcType="VARCHAR" />
+    <result column="RESP_CODE" property="respCode" jdbcType="VARCHAR" />
+    <result column="RESP_DESC" property="respDesc" jdbcType="VARCHAR" />
+    <result column="EXT_DATA1" property="extData1" jdbcType="VARCHAR" />
+    <result column="EXT_DATA2" property="extData2" jdbcType="VARCHAR" />
+    <result column="EXTEND1" property="extend1" jdbcType="VARCHAR" />
+    <result column="EXTEND2" property="extend2" jdbcType="VARCHAR" />
+    <result column="EXTEND3" property="extend3" jdbcType="VARCHAR" />
+    <result column="EXTEND4" property="extend4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ORDER_ID, TRANSACTION_ID, ORDER_SEQ, UPTRAN_SEQ, FEE, SP_ID, CMP_DATE, TIME_STAMP, 
+    PAY_TIME, RESP_CODE, RESP_DESC, EXT_DATA1, EXT_DATA2, EXTEND1, EXTEND2, EXTEND3, 
+    EXTEND4
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_callback_order
+    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wx_callback_order
+    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sz.fts.bean.wxpay.WxCallbackOrder" >
+    insert into wx_callback_order (ORDER_ID, TRANSACTION_ID, ORDER_SEQ, 
+      UPTRAN_SEQ, FEE, SP_ID, 
+      CMP_DATE, TIME_STAMP, PAY_TIME, 
+      RESP_CODE, RESP_DESC, EXT_DATA1, 
+      EXT_DATA2, EXTEND1, EXTEND2, 
+      EXTEND3, EXTEND4)
+    values (#{orderId,jdbcType=INTEGER}, #{transactionId,jdbcType=VARCHAR}, #{orderSeq,jdbcType=VARCHAR}, 
+      #{uptranSeq,jdbcType=VARCHAR}, #{fee,jdbcType=VARCHAR}, #{spId,jdbcType=VARCHAR}, 
+      #{cmpDate,jdbcType=VARCHAR}, #{timeStamp,jdbcType=VARCHAR}, #{payTime,jdbcType=VARCHAR}, 
+      #{respCode,jdbcType=VARCHAR}, #{respDesc,jdbcType=VARCHAR}, #{extData1,jdbcType=VARCHAR}, 
+      #{extData2,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sz.fts.bean.wxpay.WxCallbackOrder" >
+    insert into wx_callback_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="transactionId != null" >
+        TRANSACTION_ID,
+      </if>
+      <if test="orderSeq != null" >
+        ORDER_SEQ,
+      </if>
+      <if test="uptranSeq != null" >
+        UPTRAN_SEQ,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="spId != null" >
+        SP_ID,
+      </if>
+      <if test="cmpDate != null" >
+        CMP_DATE,
+      </if>
+      <if test="timeStamp != null" >
+        TIME_STAMP,
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME,
+      </if>
+      <if test="respCode != null" >
+        RESP_CODE,
+      </if>
+      <if test="respDesc != null" >
+        RESP_DESC,
+      </if>
+      <if test="extData1 != null" >
+        EXT_DATA1,
+      </if>
+      <if test="extData2 != null" >
+        EXT_DATA2,
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1,
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2,
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3,
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="transactionId != null" >
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSeq != null" >
+        #{orderSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="uptranSeq != null" >
+        #{uptranSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=VARCHAR},
+      </if>
+      <if test="spId != null" >
+        #{spId,jdbcType=VARCHAR},
+      </if>
+      <if test="cmpDate != null" >
+        #{cmpDate,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null" >
+        #{timeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=VARCHAR},
+      </if>
+      <if test="respCode != null" >
+        #{respCode,jdbcType=VARCHAR},
+      </if>
+      <if test="respDesc != null" >
+        #{respDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="extData1 != null" >
+        #{extData1,jdbcType=VARCHAR},
+      </if>
+      <if test="extData2 != null" >
+        #{extData2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.wxpay.WxCallbackOrder" >
+    update wx_callback_order
+    <set >
+      <if test="transactionId != null" >
+        TRANSACTION_ID = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSeq != null" >
+        ORDER_SEQ = #{orderSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="uptranSeq != null" >
+        UPTRAN_SEQ = #{uptranSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=VARCHAR},
+      </if>
+      <if test="spId != null" >
+        SP_ID = #{spId,jdbcType=VARCHAR},
+      </if>
+      <if test="cmpDate != null" >
+        CMP_DATE = #{cmpDate,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStamp != null" >
+        TIME_STAMP = #{timeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME = #{payTime,jdbcType=VARCHAR},
+      </if>
+      <if test="respCode != null" >
+        RESP_CODE = #{respCode,jdbcType=VARCHAR},
+      </if>
+      <if test="respDesc != null" >
+        RESP_DESC = #{respDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="extData1 != null" >
+        EXT_DATA1 = #{extData1,jdbcType=VARCHAR},
+      </if>
+      <if test="extData2 != null" >
+        EXT_DATA2 = #{extData2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.wxpay.WxCallbackOrder" >
+    update wx_callback_order
+    set TRANSACTION_ID = #{transactionId,jdbcType=VARCHAR},
+      ORDER_SEQ = #{orderSeq,jdbcType=VARCHAR},
+      UPTRAN_SEQ = #{uptranSeq,jdbcType=VARCHAR},
+      FEE = #{fee,jdbcType=VARCHAR},
+      SP_ID = #{spId,jdbcType=VARCHAR},
+      CMP_DATE = #{cmpDate,jdbcType=VARCHAR},
+      TIME_STAMP = #{timeStamp,jdbcType=VARCHAR},
+      PAY_TIME = #{payTime,jdbcType=VARCHAR},
+      RESP_CODE = #{respCode,jdbcType=VARCHAR},
+      RESP_DESC = #{respDesc,jdbcType=VARCHAR},
+      EXT_DATA1 = #{extData1,jdbcType=VARCHAR},
+      EXT_DATA2 = #{extData2,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

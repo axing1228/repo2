@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sz.fts.dao.xmftg.XmfTuanYuanInfoMapper">
+    <resultMap id="BaseResultMap" type="com.sz.fts.bean.xmftg.XmfTuanYuanInfo">
+        <id column="TY_ID" jdbcType="INTEGER" property="tyId"/>
+        <result column="OPEN_ID" jdbcType="VARCHAR" property="openId"/>
+        <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime"/>
+        <result column="STATUS" jdbcType="INTEGER" property="status"/>
+        <result column="TX_URL" jdbcType="VARCHAR" property="txUrl"/>
+        <result column="FLAG" jdbcType="VARCHAR" property="flag"/>
+        <result column="LOCATION" jdbcType="INTEGER" property="location"/>
+        <result column="EXTEND1" jdbcType="VARCHAR" property="extend1"/>
+        <result column="EXTEND2" jdbcType="VARCHAR" property="extend2"/>
+        <result column="EXTEND3" jdbcType="VARCHAR" property="extend3"/>
+        <result column="EXTEND4" jdbcType="VARCHAR" property="extend4"/>
+        <result column="EXTEND5" jdbcType="VARCHAR" property="extend5"/>
+        <result column="EXTEND6" jdbcType="VARCHAR" property="extend6"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    TY_ID, OPEN_ID, CREATE_TIME, STATUS, TX_URL, FLAG, LOCATION, EXTEND1, EXTEND2, EXTEND3, 
+    EXTEND4, EXTEND5, EXTEND6
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tuanyuan_info
+        where TY_ID = #{tyId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectCountByFlag" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select
+    count(1)
+    from xmf_tuanyuan_info
+    where FLAG = #{flag,jdbcType=VARCHAR}
+  </select>
+
+    <select id="selectByFlagAndOpenId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tuanyuan_info
+        where FLAG = #{flag,jdbcType=VARCHAR} AND OPEN_ID =#{openId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap" parameterType="com.sz.fts.bean.xmftg.XmfTuanYuanInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from xmf_tuanyuan_info
+        where 1=1
+        <if test="openId!=null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="status!=null">
+            and STATUS =#{status,jdbcType=INTEGER}
+        </if>
+        <if test="extend1!=null">
+            and EXTEND1 =#{extend1,jdbcType=VARCHAR}
+        </if>
+        <if test="flag!=null">
+            and FLAG =#{flag,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+       ORDER BY TY_ID DESC limit #{bigenPage,jdbcType=INTEGER},#{endPage,jdbcType=INTEGER}
+    </select>
+    <select id="selectCount" resultType="java.lang.Integer" parameterType="com.sz.fts.bean.xmftg.XmfTuanYuanInfo">
+        select
+        count(1)
+        from xmf_tuanyuan_info
+        where 1=1
+        <if test="openId!=null">
+            and OPEN_ID = #{openId,jdbcType=VARCHAR}
+        </if>
+        <if test="status!=null">
+            and STATUS =#{status,jdbcType=INTEGER}
+        </if>
+        <if test="extend1!=null">
+            and EXTEND1 =#{extend1,jdbcType=VARCHAR}
+        </if>
+        <if test="flag!=null">
+            and FLAG =#{flag,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and STR_TO_DATE (
+            CREATE_TIME,
+            '%Y-%m-%d %T'
+            ) BETWEEN STR_TO_DATE (
+            #{startTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+            AND STR_TO_DATE (
+            #{endTime,jdbcType=VARCHAR},
+            '%Y-%m-%d %T'
+            )
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xmf_tuanyuan_info
+    where TY_ID = #{tyId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.sz.fts.bean.xmftg.XmfTuanYuanInfo">
+    insert into xmf_tuanyuan_info (TY_ID, OPEN_ID, CREATE_TIME, 
+      STATUS, TX_URL, FLAG, 
+      LOCATION, EXTEND1, EXTEND2, 
+      EXTEND3, EXTEND4, EXTEND5, 
+      EXTEND6)
+    values (#{tyId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{txUrl,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, 
+      #{location,jdbcType=INTEGER}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, 
+      #{extend6,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.sz.fts.bean.xmftg.XmfTuanYuanInfo">
+        insert into xmf_tuanyuan_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tyId != null">
+                TY_ID,
+            </if>
+            <if test="openId != null">
+                OPEN_ID,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="txUrl != null">
+                TX_URL,
+            </if>
+            <if test="flag != null">
+                FLAG,
+            </if>
+            <if test="location != null">
+                LOCATION,
+            </if>
+            <if test="extend1 != null">
+                EXTEND1,
+            </if>
+            <if test="extend2 != null">
+                EXTEND2,
+            </if>
+            <if test="extend3 != null">
+                EXTEND3,
+            </if>
+            <if test="extend4 != null">
+                EXTEND4,
+            </if>
+            <if test="extend5 != null">
+                EXTEND5,
+            </if>
+            <if test="extend6 != null">
+                EXTEND6,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tyId != null">
+                #{tyId,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="txUrl != null">
+                #{txUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=INTEGER},
+            </if>
+            <if test="extend1 != null">
+                #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                #{extend4,jdbcType=VARCHAR},
+            </if>
+            <if test="extend5 != null">
+                #{extend5,jdbcType=VARCHAR},
+            </if>
+            <if test="extend6 != null">
+                #{extend6,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateAllByFlag" parameterType="java.lang.String">
+        update xmf_tuanyuan_info
+        set STATUS = 2
+        where  FLAG = #{flag,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.sz.fts.bean.xmftg.XmfTuanYuanInfo">
+        update xmf_tuanyuan_info
+        <set>
+            <if test="openId != null">
+                OPEN_ID = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="txUrl != null">
+                TX_URL = #{txUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                FLAG = #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                LOCATION = #{location,jdbcType=INTEGER},
+            </if>
+            <if test="extend1 != null">
+                EXTEND1 = #{extend1,jdbcType=VARCHAR},
+            </if>
+            <if test="extend2 != null">
+                EXTEND2 = #{extend2,jdbcType=VARCHAR},
+            </if>
+            <if test="extend3 != null">
+                EXTEND3 = #{extend3,jdbcType=VARCHAR},
+            </if>
+            <if test="extend4 != null">
+                EXTEND4 = #{extend4,jdbcType=VARCHAR},
+            </if>
+            <if test="extend5 != null">
+                EXTEND5 = #{extend5,jdbcType=VARCHAR},
+            </if>
+            <if test="extend6 != null">
+                EXTEND6 = #{extend6,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where TY_ID = #{tyId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sz.fts.bean.xmftg.XmfTuanYuanInfo">
+    update xmf_tuanyuan_info
+    set OPEN_ID = #{openId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      TX_URL = #{txUrl,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=VARCHAR},
+      LOCATION = #{location,jdbcType=INTEGER},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      EXTEND5 = #{extend5,jdbcType=VARCHAR},
+      EXTEND6 = #{extend6,jdbcType=VARCHAR}
+    where TY_ID = #{tyId,jdbcType=INTEGER}
+  </update>
+</mapper>
