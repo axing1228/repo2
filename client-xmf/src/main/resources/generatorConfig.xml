@@ -4,11 +4,11 @@
 	<!-- 数据库驱动包位置 -->
 
 	<classPathEntry location="E:\worktools\maven-repository\mysql\mysql-connector-java-5.1.38-bin.jar" />
-	<context id="DB2Tables" targetRuntime="MyBatis3">
+	<context id="DB2Tafaewfaebles" targetRuntime="MyBatis3">
 
 		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
-
+ewfaefae
 		<!-- 取消注释 -->
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
@@ -17,9 +17,9 @@
 		<!-- 数据库链接URL、用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3307/szfts?useSSL=true" userId="root" password="123456">
 		</jdbcConnection>
-		<javaTypeResolver>
+		<javaTypeResolver>faefae
 			<property name="forceBigDecimals" value="false" />
-		</javaTypeResolver>
+		</javaTypeResfaefawesolver>
 		<!-- 生成模型的包名和位置 -->
 		<javaModelGenerator targetPackage="com.sz.fts.bean.yaoyiyao" targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
