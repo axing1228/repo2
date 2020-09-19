@@ -8,6 +8,11 @@
 
 		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+
+ewfaefae
+qqqqqqqqqqqqqqqqqqqqq
+
+
 ewfaefae
 		<!-- 取消注释 -->
 		<commentGenerator>
