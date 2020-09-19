@@ -7,7 +7,7 @@ public class CommonBaomingLog implements Serializable {
 
     private String userName;
 
-    private String mobile;
+    private String mobile22;
 
     private String wechatNum;
 
