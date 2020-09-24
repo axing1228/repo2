@@ -22,6 +22,7 @@ public class CommonBaomingLog implements Serializable {
     private String extend4;
 
     private String develop;
+    private String zhenghuaxing;
 
     public String getDevelop() {
         return develop;
