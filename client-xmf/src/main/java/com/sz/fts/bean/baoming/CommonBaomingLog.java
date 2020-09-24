@@ -21,6 +21,16 @@ public class CommonBaomingLog implements Serializable {
 
     private String extend4;
 
+    private String develop;
+
+    public String getDevelop() {
+        return develop;
+    }
+
+    public void setDevelop(String develop) {
+        this.develop = develop;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getLogId() {
